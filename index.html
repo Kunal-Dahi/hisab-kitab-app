@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hisab Kitab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell" aria-label="Hisab Kitab mobile app">
+      <section class="screen active" data-screen="home">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Good evening</p>
+            <h1>Hisab Kitab</h1>
+          </div>
+          <button class="icon-button" type="button" aria-label="Open notifications">
+            <span aria-hidden="true">!</span>
+          </button>
+        </header>
+
+        <section class="balance-panel" aria-label="Balance summary">
+          <div class="balance-copy">
+            <p>Total Balance</p>
+            <strong id="totalBalance">PKR 0</strong>
+          </div>
+          <div class="balance-grid">
+            <div>
+              <span>Income</span>
+              <strong id="incomeTotal">PKR 0</strong>
+            </div>
+            <div>
+              <span>Expense</span>
+              <strong id="expenseTotal">PKR 0</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="quick-actions" aria-label="Quick actions">
+          <button class="quick-action income-action" type="button" data-add-type="income">
+            <span aria-hidden="true">+</span>
+            Add Income
+          </button>
+          <button class="quick-action expense-action" type="button" data-add-type="expense">
+            <span aria-hidden="true">-</span>
+            Add Expense
+          </button>
+        </section>
+
+        <section class="section-head">
+          <h2>Overview</h2>
+          <button class="text-button" type="button" data-nav="activity">See all</button>
+        </section>
+
+        <section class="insight-row" aria-label="Spending insights">
+          <div class="insight-tile">
+            <span class="tile-icon food" aria-hidden="true"></span>
+            <p>Top spend</p>
+            <strong id="topCategory">Groceries</strong>
+          </div>
+          <div class="insight-tile">
+            <span class="tile-icon due" aria-hidden="true"></span>
+            <p>Due soon</p>
+            <strong id="dueSoon">2 ledgers</strong>
+          </div>
+        </section>
+
+        <section class="section-head">
+          <h2>Recent</h2>
+          <button class="text-button" type="button" data-nav="activity">View</button>
+        </section>
+        <div class="list" id="recentList"></div>
+      </section>
+
+      <section class="screen" data-screen="activity">
+        <header class="topbar compact">
+          <div>
+            <p class="eyebrow">Ledger</p>
+            <h1>Transactions</h1>
+          </div>
+          <button class="icon-button" type="button" data-open-add aria-label="Add transaction">
+            <span aria-hidden="true">+</span>
+          </button>
+        </header>
+
+        <div class="segmented" role="tablist" aria-label="Filter transactions">
+          <button class="segment active" type="button" data-filter="all">All</button>
+          <button class="segment" type="button" data-filter="income">Income</button>
+          <button class="segment" type="button" data-filter="expense">Expense</button>
+        </div>
+        <div class="list tall" id="activityList"></div>
+      </section>
+
+      <section class="screen" data-screen="people">
+        <header class="topbar compact">
+          <div>
+            <p class="eyebrow">Accounts</p>
+            <h1>People</h1>
+          </div>
+          <button class="icon-button" type="button" aria-label="Search people">
+            <span aria-hidden="true"></span>
+          </button>
+        </header>
+
+        <section class="person-summary">
+          <div>
+            <span>To receive</span>
+            <strong id="receiveTotal">PKR 0</strong>
+          </div>
+          <div>
+            <span>To pay</span>
+            <strong id="payTotal">PKR 0</strong>
+          </div>
+        </section>
+
+        <div class="list tall" id="peopleList"></div>
+      </section>
+
+      <section class="screen" data-screen="stats">
+        <header class="topbar compact">
+          <div>
+            <p class="eyebrow">Monthly</p>
+            <h1>Analytics</h1>
+          </div>
+        </header>
+
+        <section class="chart-panel" aria-label="Monthly spending chart">
+          <div class="chart-head">
+            <div>
+              <span>July spend</span>
+              <strong id="monthSpend">PKR 0</strong>
+            </div>
+            <small>Updated now</small>
+          </div>
+          <div class="bars" id="bars"></div>
+        </section>
+
+        <section class="section-head">
+          <h2>Categories</h2>
+        </section>
+        <div class="category-list" id="categoryList"></div>
+      </section>
+
+      <nav class="bottom-nav" aria-label="Primary">
+        <button class="nav-item active" type="button" data-nav="home">
+          <span class="nav-icon home-icon" aria-hidden="true"></span>
+          Home
+        </button>
+        <button class="nav-item" type="button" data-nav="activity">
+          <span class="nav-icon list-icon" aria-hidden="true"></span>
+          Ledger
+        </button>
+        <button class="fab" type="button" data-open-add aria-label="Add transaction">+</button>
+        <button class="nav-item" type="button" data-nav="people">
+          <span class="nav-icon people-icon" aria-hidden="true"></span>
+          People
+        </button>
+        <button class="nav-item" type="button" data-nav="stats">
+          <span class="nav-icon stats-icon" aria-hidden="true"></span>
+          Stats
+        </button>
+      </nav>
+    </main>
+
+    <dialog class="add-sheet" id="addDialog">
+      <form method="dialog" id="transactionForm">
+        <div class="sheet-head">
+          <h2>Add Entry</h2>
+          <button class="icon-button small" value="cancel" type="submit" aria-label="Close">x</button>
+        </div>
+
+        <div class="type-switch" role="radiogroup" aria-label="Transaction type">
+          <label>
+            <input type="radio" name="type" value="income" checked>
+            <span>Income</span>
+          </label>
+          <label>
+            <input type="radio" name="type" value="expense">
+            <span>Expense</span>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Amount</span>
+          <input name="amount" inputmode="numeric" placeholder="2500" required>
+        </label>
+        <label class="field">
+          <span>Title</span>
+          <input name="title" placeholder="Shop payment" required>
+        </label>
+        <label class="field">
+          <span>Category</span>
+          <select name="category">
+            <option>Groceries</option>
+            <option>Salary</option>
+            <option>Rent</option>
+            <option>Transport</option>
+            <option>Business</option>
+            <option>Family</option>
+          </select>
+        </label>
+        <button class="primary-button" type="submit" value="default">Save Entry</button>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
